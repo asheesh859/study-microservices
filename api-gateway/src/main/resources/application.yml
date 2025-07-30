@@ -1,0 +1,23 @@
+server:
+  port: 5555
+spring:
+  application:
+    name: api-gateway
+
+cloud:
+  gateway:
+    routes:
+      - id : microservice-api-1
+        uri: lb://MICROSERVICE1
+        predicataes:
+         - path=/micro1/**
+        filters:
+         - RewritePath=/micro1<>/(?<segment>.*), /${segment}                                         
+
+      - id : microservice-api-2
+        uri: lb://MICROSERVICE2
+        predicates:
+         - path=/micro2/**
+        filters:
+         -RewritePath=/micro2/(?<segment>.*), /${segment}
+
